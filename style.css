@@ -2,4 +2,45 @@
     margin: 0;
     border: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+:root{
+    --white: #fff;
+    --green: rgb(51, 212, 110);
+    --bright-green: #1eff00;
+
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: conic-gradient(at left center, rgb(56, 189, 248), rgb(30, 64, 175));
+}
+.header{
+    max-width: 760px;
+    text-align: center;
+}
+h1{
+    letter-spacing: 1px;
+    line-height: 4rem;
+    color: var(--white);
+    margin-bottom: 30px;
+}
+
+button{
+    padding: 35px 100px;
+    border-radius: 4%;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    background-color: var(--green);
+    font-weight: 500;
+}
+
+button:hover{
+    background-color: var(--bright-green);
 }

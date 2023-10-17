@@ -6,7 +6,7 @@
 }
 :root{
     --white: #fff;
-    --green: rgb(51, 212, 110);
+    --green: rgb(15, 224, 91);
     --bright-green: #1eff00;
 
 }
@@ -31,16 +31,36 @@ h1{
     margin-bottom: 30px;
 }
 
-button{
+#start-game{
     padding: 35px 100px;
-    border-radius: 4%;
+    border-radius: 10px;
     border: none;
     font-size: 1.3rem;
     cursor: pointer;
     background-color: var(--green);
     font-weight: 500;
 }
+#start-game:hover{
+    background-color: var(--bright-green);
+}
 
-button:hover{
+
+/*          JavaScript Classes         */
+
+.button-container{
+    display: flex;
+}
+.game-mode-button{
+    padding: 30px 85px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    background-color: var(--green);
+    font-weight: 500;
+    margin: 1.6rem;
+}
+
+.game-mode-button:hover{
     background-color: var(--bright-green);
 }

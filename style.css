@@ -74,8 +74,9 @@ h1 {
 }
 
 .rps-button-container {
+	display: flex;
 	position: relative;
-	top: 13%;
+	top: 10%;
 }
 
 .rps-buttons {
@@ -93,22 +94,43 @@ h1.rps-header {
 	bottom: 28.5%;
 }
 
-.rps-button-container button:first-child {
+.rps-button-container > div:nth-child(1) .rps-buttons {
 	background-color: var(--red);
 }
-.rps-button-container button:first-child:hover {
+.rps-button-container > div:nth-child(1) .rps-buttons:hover {
 	background-color: var(--bright-red);
 }
-.rps-button-container button:nth-child(2) {
+.rps-button-container > div:nth-child(2) .rps-buttons{
 	background-color: var(--clay);
 }
-.rps-button-container button:nth-child(2):hover {
+.rps-button-container > div:nth-child(2) .rps-buttons:hover {
 	background-color: var(--bright-clay);
 }
 
-.rps-button-container button:last-child {
+.rps-button-container > div:nth-child(3) .rps-buttons {
 	background-color: var(--yellow);
 }
-.rps-button-container button:last-child:hover{
+.rps-button-container > div:nth-child(3) .rps-buttons:hover{
     background-color: var(--bright-yellow);
+}
+
+
+.hover-rock-image{
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	border: none;
+	border-radius: 10%;	
+	display: block;
+	top: -95px;
+	left: 60px;
+
+}
+
+.hover-paper-image{
+
+}
+
+.hover-scissors-image{
+
 }

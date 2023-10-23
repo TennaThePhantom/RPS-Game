@@ -55,6 +55,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	rock.src = "Rock.jpg";
 	paper.src = "Paper.jpg";
 	scissors.src = "Scissors.jpg";
+	rock.classList.add("hover-rock-image");
 	const removeEverything = () => {
 		while (body.firstChild) body.removeChild(body.firstChild);
 	};
@@ -62,7 +63,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	function twoPlayerGameMode() {
 		const headerText = document.createElement("h1");
 		headerText.textContent = "Player 1 Choose";
-		headerText.classList.add('rps-header');
+		headerText.classList.add("rps-header");
 		body.append(headerText);
 
 		const rockButton = document.createElement("button");
@@ -70,19 +71,60 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		const scissorsButton = document.createElement("button");
 
 		const buttonDiv = document.createElement("div");
-		buttonDiv.classList.add('rps-button-container');
-
+		buttonDiv.classList.add("rps-button-container");
+		for (let hoverImage = 0; hoverImage < 3; hoverImage++) {
+			const imageHoverContainer = document.createElement("div");
+			imageHoverContainer.classList.add("image-button-container");
+			buttonDiv.append(imageHoverContainer);
+			if (hoverImage === 0) {
+				imageHoverContainer.append(rockButton);
+			} else if (hoverImage === 1) {
+				imageHoverContainer.append(paperButton);
+			} else if (hoverImage === 2) {
+				imageHoverContainer.append(scissorsButton);
+			}
+			buttonDiv.append(imageHoverContainer);
+		}
 		rockButton.textContent = "Rock";
 		paperButton.textContent = "Paper";
 		scissorsButton.textContent = "Scissors";
 
 		const buttons = [rockButton, paperButton, scissorsButton];
 		for (const button of buttons) {
-			buttonDiv.append(button)
-			button.classList.add('rps-buttons');
+			button.classList.add("rps-buttons");
 		}
+
+		rockButton.id = "rock";
+		paperButton.id = "paper";
+		scissorsButton.id = "scissors";
+
 		body.append(buttonDiv);
+
+		for (const button of buttons) {
+			button.addEventListener("mouseover", () => {
+				let buttonId = button.id;
+				if (buttonId === "rock") {
+					rock.style.display = "block";
+					const createdRockContainer = document.createElement("div");
+					createdRockContainer.classList.add("rock-container");
+					const firstImageContainer = document.querySelectorAll(
+						".image-button-container"
+					)[0];
+					firstImageContainer.appendChild(rock);
+				}
+			});
+
+			for (const button of buttons) {
+				button.addEventListener("mouseout", () => {
+					let buttonId = button.id;
+					if (buttonId === "rock") {
+						rock.style.display = "none";
+					}
+				});
+			}
+		}
 	}
+
 	if (playerChoice1 === 1 && playerChoice2 === 0) {
 		removeEverything();
 	} else if (playerChoice2 === 1 && playerChoice1 === 0) {
@@ -93,6 +135,3 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		return null;
 	}
 }
-
-
-

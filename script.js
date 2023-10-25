@@ -55,10 +55,32 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	rock.src = "Rock.jpg";
 	paper.src = "Paper.jpg";
 	scissors.src = "Scissors.jpg";
-	rock.classList.add("hover-rock-image");
+	rock.classList.add("hover-rock-image", "hover-image");
+	paper.classList.add("hover-paper-image", "hover-image")
+	scissors.classList.add("hover-scissors-image", "hover-image")
 	const removeEverything = () => {
 		while (body.firstChild) body.removeChild(body.firstChild);
 	};
+
+	function rpsHoverImage(buttonId) {
+		if (buttonId === "rock") {
+			rock.style.display = "block";
+			const firstImageContainer = document.querySelectorAll(
+				".image-button-container"
+			)[0];
+			firstImageContainer.appendChild(rock);
+		}
+		if(buttonId === 'paper'){
+			paper.style.display = "block";
+			const secondImageContainer = document.querySelectorAll(".image-button-container")[1];
+			secondImageContainer.appendChild(paper);
+		}
+		if(buttonId === 'scissors'){
+			scissors.style.display = "block";
+			const lastImageContainer = document.querySelectorAll(".image-button-container")[2];
+			lastImageContainer.appendChild(scissors)
+		}
+	}
 
 	function twoPlayerGameMode() {
 		const headerText = document.createElement("h1");
@@ -103,15 +125,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		for (const button of buttons) {
 			button.addEventListener("mouseover", () => {
 				let buttonId = button.id;
-				if (buttonId === "rock") {
-					rock.style.display = "block";
-					const createdRockContainer = document.createElement("div");
-					createdRockContainer.classList.add("rock-container");
-					const firstImageContainer = document.querySelectorAll(
-						".image-button-container"
-					)[0];
-					firstImageContainer.appendChild(rock);
-				}
+				rpsHoverImage(buttonId)
 			});
 
 			for (const button of buttons) {
@@ -119,6 +133,12 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 					let buttonId = button.id;
 					if (buttonId === "rock") {
 						rock.style.display = "none";
+					}
+					if (buttonId === "paper") {
+						paper.style.display = "none";
+					}
+					if (buttonId === "scissors") {
+						scissors.style.display = "none";
 					}
 				});
 			}

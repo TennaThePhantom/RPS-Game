@@ -100,7 +100,7 @@ h1.rps-header {
 .rps-button-container > div:nth-child(1) .rps-buttons:hover {
 	background-color: var(--bright-red);
 }
-.rps-button-container > div:nth-child(2) .rps-buttons{
+.rps-button-container > div:nth-child(2) .rps-buttons {
 	background-color: var(--clay);
 }
 .rps-button-container > div:nth-child(2) .rps-buttons:hover {
@@ -110,27 +110,29 @@ h1.rps-header {
 .rps-button-container > div:nth-child(3) .rps-buttons {
 	background-color: var(--yellow);
 }
-.rps-button-container > div:nth-child(3) .rps-buttons:hover{
-    background-color: var(--bright-yellow);
+.rps-button-container > div:nth-child(3) .rps-buttons:hover {
+	background-color: var(--bright-yellow);
 }
 
-
-.hover-rock-image{
+.hover-image {
+	display: block;
 	position: absolute;
 	height: 100px;
 	width: 100px;
 	border: none;
-	border-radius: 10%;	
-	display: block;
+	border-radius: 10%;
+}
+.hover-rock-image {
 	top: -95px;
 	left: 60px;
-
 }
 
-.hover-paper-image{
-
+.hover-paper-image {
+	left: 40%;
+	top: -95px;
 }
 
-.hover-scissors-image{
-
+.hover-scissors-image {
+	left: 74%;
+	top: -95px;
 }

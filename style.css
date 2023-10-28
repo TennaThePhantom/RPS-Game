@@ -136,3 +136,27 @@ h1.rps-header {
 	left: 74%;
 	top: -95px;
 }
+.rps-image-display-container{
+	height: 300px;
+	width: 600px;
+	position: absolute;
+	top: 16.5%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.display-image-1{
+	margin-left: 35px;
+}
+
+.display-image-2{
+	margin-right: 35px;
+}
+
+.rps-display-image{
+	display: none;
+	height: 195px;
+	width: 195px;
+	border-radius: 10%;
+}

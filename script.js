@@ -52,12 +52,16 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const rock = new Image();
 	const paper = new Image();
 	const scissors = new Image();
+	const rockButton = document.createElement("button");
+	const paperButton = document.createElement("button");
+	const scissorsButton = document.createElement("button");
+
 	rock.src = "Rock.jpg";
 	paper.src = "Paper.jpg";
 	scissors.src = "Scissors.jpg";
 	rock.classList.add("hover-rock-image", "hover-image");
-	paper.classList.add("hover-paper-image", "hover-image")
-	scissors.classList.add("hover-scissors-image", "hover-image")
+	paper.classList.add("hover-paper-image", "hover-image");
+	scissors.classList.add("hover-scissors-image", "hover-image");
 	const removeEverything = () => {
 		while (body.firstChild) body.removeChild(body.firstChild);
 	};
@@ -70,15 +74,19 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			)[0];
 			firstImageContainer.appendChild(rock);
 		}
-		if(buttonId === 'paper'){
+		if (buttonId === "paper") {
 			paper.style.display = "block";
-			const secondImageContainer = document.querySelectorAll(".image-button-container")[1];
+			const secondImageContainer = document.querySelectorAll(
+				".image-button-container"
+			)[1];
 			secondImageContainer.appendChild(paper);
 		}
-		if(buttonId === 'scissors'){
+		if (buttonId === "scissors") {
 			scissors.style.display = "block";
-			const lastImageContainer = document.querySelectorAll(".image-button-container")[2];
-			lastImageContainer.appendChild(scissors)
+			const lastImageContainer = document.querySelectorAll(
+				".image-button-container"
+			)[2];
+			lastImageContainer.appendChild(scissors);
 		}
 	}
 
@@ -87,10 +95,23 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		headerText.textContent = "Player 1 Choose";
 		headerText.classList.add("rps-header");
 		body.append(headerText);
+		const rockDisplay = new Image();
+		const paperDisplay = new Image();
+		const scissorsDisplay = new Image();
+		rockDisplay.src = "Rock.jpg";
+		paperDisplay.src = "Paper.jpg";
+		scissorsDisplay.src = "Scissors.jpg";
+		rockDisplay.classList.add("rps-display-image");
+		paperDisplay.classList.add("rps-display-image");
+		scissorsDisplay.classList.add('rps-display-image')
 
-		const rockButton = document.createElement("button");
-		const paperButton = document.createElement("button");
-		const scissorsButton = document.createElement("button");
+		const rpsDisplayContainer = document.createElement("div");
+		const image1Display = document.createElement("div");
+		const image2Display = document.createElement("div");
+		image1Display.classList.add("display-image-1");
+		image2Display.classList.add("display-image-2");
+
+		rpsDisplayContainer.classList.add("rps-image-display-container");
 
 		const buttonDiv = document.createElement("div");
 		buttonDiv.classList.add("rps-button-container");
@@ -121,27 +142,45 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		scissorsButton.id = "scissors";
 
 		body.append(buttonDiv);
+		body.append(rpsDisplayContainer);
 
 		for (const button of buttons) {
 			button.addEventListener("mouseover", () => {
 				let buttonId = button.id;
-				rpsHoverImage(buttonId)
+				rpsHoverImage(buttonId);
 			});
-
-			for (const button of buttons) {
-				button.addEventListener("mouseout", () => {
-					let buttonId = button.id;
-					if (buttonId === "rock") {
-						rock.style.display = "none";
-					}
-					if (buttonId === "paper") {
-						paper.style.display = "none";
-					}
-					if (buttonId === "scissors") {
-						scissors.style.display = "none";
-					}
-				});
-			}
+			button.addEventListener("mouseout", () => {
+				const buttonId = button.id;
+				if (buttonId === "rock") {
+					rock.style.display = "none";
+				}
+				if (buttonId === "paper") {
+					paper.style.display = "none";
+				}
+				if (buttonId === "scissors") {
+					scissors.style.display = "none";
+				}
+			});
+		}
+		for (const button of buttons) {
+			button.addEventListener("click", () => {
+				const buttonId = button.id;
+				if (buttonId === "rock") {
+					image1Display.append(rockDisplay);
+					rpsDisplayContainer.append(image1Display);
+					rockDisplay.style.display = "block";
+				}
+				if (buttonId === "paper") {
+					image1Display.append(paperDisplay);
+					rpsDisplayContainer.append(image1Display);
+					paperDisplay.style.display = "block";
+				}
+				if (buttonId === "scissors") {
+					image1Display.append(scissorsDisplay);
+					rpsDisplayContainer.append(image1Display);
+					scissorsDisplay.style.display = "block";
+				}
+			});
 		}
 	}
 

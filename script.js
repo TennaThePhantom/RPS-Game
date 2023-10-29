@@ -145,24 +145,27 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		body.append(buttonDiv);
 		body.append(rpsDisplayContainer);
 
-		for (const button of buttons) {
-			button.addEventListener("mouseover", () => {
-				let buttonId = button.id;
-				rpsHoverImage(buttonId);
-			});
-			button.addEventListener("mouseout", () => {
-				const buttonId = button.id;
-				if (buttonId === "rock") {
-					rock.style.display = "none";
-				}
-				if (buttonId === "paper") {
-					paper.style.display = "none";
-				}
-				if (buttonId === "scissors") {
-					scissors.style.display = "none";
-				}
-			});
+		function createRPSHoverImage(buttons) {
+			for (const button of buttons) {
+				button.addEventListener("mouseover", () => {
+					let buttonId = button.id;
+					rpsHoverImage(buttonId);
+				});
+				button.addEventListener("mouseout", () => {
+					const buttonId = button.id;
+					if (buttonId === "rock") {
+						rock.style.display = "none";
+					}
+					if (buttonId === "paper") {
+						paper.style.display = "none";
+					}
+					if (buttonId === "scissors") {
+						scissors.style.display = "none";
+					}
+				});
+			}
 		}
+		createRPSHoverImage(buttons)
 		for (const button of buttons) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
@@ -180,7 +183,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (buttonId === "paper" && playerTurn === 1) {
 					headerText.textContent = "Player 2 Choose";
 					image1Display.append(paperDisplay);
-					
+
 					rpsDisplayContainer.append(image1Display);
 					paperDisplay.style.display = "block";
 					setTimeout(() => {

@@ -111,6 +111,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		}
 	}
 
+	
+
 	function createRPSGameScreen() {
 		let playerTurn = 1;
 		const gameHeaderText = document.createElement("h1");

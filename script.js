@@ -93,7 +93,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			lastImageContainer.appendChild(scissors);
 		}
 	}
-	// displays the rps images onto screen
+	// displays the rps hover images onto screen
 	function createRPSHoverImage(buttons) {
 		for (const button of buttons) {
 			button.addEventListener("mouseover", () => {

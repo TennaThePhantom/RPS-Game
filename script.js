@@ -2,7 +2,7 @@ const startGame = document.getElementById("start-game");
 const headerText = document.getElementById("headerText");
 const body = document.body;
 
-const gameMode = { 
+const gameMode = {
 	singlePlayer: 0,
 	twoPlayer: 0,
 };
@@ -131,50 +131,18 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			buttonDiv.append(imageHoverContainer);
 		}
 	}
-	// creates the rps game screen
-	function createRPSGameScreen() {
-		let playerTurn = 1;
-		const gameHeaderText = document.createElement("h1");
-		gameHeaderText.textContent = "Player 1 Choose";
-		gameHeaderText.classList.add("rps-header");
-		body.append(gameHeaderText);
-		const rockDisplay = new Image();
-		const paperDisplay = new Image();
-		const scissorsDisplay = new Image();
-		rockDisplay.src = "Rock.jpg";
-		paperDisplay.src = "Paper.jpg";
-		scissorsDisplay.src = "Scissors.jpg";
-		rockDisplay.classList.add("rps-display-image");
-		paperDisplay.classList.add("rps-display-image");
-		scissorsDisplay.classList.add("rps-display-image");
-
-		const rpsDisplayContainer = document.createElement("div");
-		const image1Display = document.createElement("div");
-		const image2Display = document.createElement("div");
-		image1Display.classList.add("display-image-1");
-		image2Display.classList.add("display-image-2");
-
-		rpsDisplayContainer.classList.add("rps-image-display-container");
-
-		const buttonDiv = document.createElement("div");
-		createRPSHoverImagesBox(buttonDiv);
-		rockButton.textContent = "Rock";
-		paperButton.textContent = "Paper";
-		scissorsButton.textContent = "Scissors";
-
-		const buttons = [rockButton, paperButton, scissorsButton];
-		for (const button of buttons) {
-			button.classList.add("rps-buttons");
-		}
-
-		rockButton.id = "rock";
-		paperButton.id = "paper";
-		scissorsButton.id = "scissors";
-
-		body.append(buttonDiv);
-		body.append(rpsDisplayContainer);
-
-		createRPSHoverImage(buttons);
+	// makes the rps images to show in middle of screen
+	function createRPSImages(
+		buttons,
+		playerTurn,
+		gameHeaderText,
+		image1Display,
+		image2Display,
+		rpsDisplayContainer,
+		rockDisplay,
+		paperDisplay,
+		scissorsDisplay
+	) {
 		for (const button of buttons) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
@@ -192,7 +160,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (buttonId === "paper" && playerTurn === 1) {
 					gameHeaderText.textContent = "Player 2 Choose";
 					image1Display.append(paperDisplay);
-
 					rpsDisplayContainer.append(image1Display);
 					paperDisplay.style.display = "block";
 					setTimeout(() => {
@@ -252,6 +219,53 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				}
 			});
 		}
+	}
+
+	// creates the rps game screen
+	function createRPSGameScreen() {
+		let playerTurn = 1;
+		const gameHeaderText = document.createElement("h1");
+		gameHeaderText.textContent = "Player 1 Choose";
+		gameHeaderText.classList.add("rps-header");
+		body.append(gameHeaderText);
+		const rockDisplay = new Image();
+		const paperDisplay = new Image();
+		const scissorsDisplay = new Image();
+		rockDisplay.src = "Rock.jpg";
+		paperDisplay.src = "Paper.jpg";
+		scissorsDisplay.src = "Scissors.jpg";
+		rockDisplay.classList.add("rps-display-image");
+		paperDisplay.classList.add("rps-display-image");
+		scissorsDisplay.classList.add("rps-display-image");
+
+		const rpsDisplayContainer = document.createElement("div");
+		const image1Display = document.createElement("div");
+		const image2Display = document.createElement("div");
+		image1Display.classList.add("display-image-1");
+		image2Display.classList.add("display-image-2");
+
+		rpsDisplayContainer.classList.add("rps-image-display-container");
+
+		const buttonDiv = document.createElement("div");
+		createRPSHoverImagesBox(buttonDiv);
+		rockButton.textContent = "Rock";
+		paperButton.textContent = "Paper";
+		scissorsButton.textContent = "Scissors";
+
+		const buttons = [rockButton, paperButton, scissorsButton];
+		for (const button of buttons) {
+			button.classList.add("rps-buttons");
+		}
+
+		rockButton.id = "rock";
+		paperButton.id = "paper";
+		scissorsButton.id = "scissors";
+
+		body.append(buttonDiv);
+		body.append(rpsDisplayContainer);
+
+		createRPSHoverImage(buttons);
+		createRPSImages(buttons, playerTurn, gameHeaderText, image1Display, image2Display, rpsDisplayContainer, rockDisplay, paperDisplay, scissorsDisplay);
 	}
 
 	function twoPlayerGameMode() {

@@ -64,10 +64,12 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	paper.classList.add("hover-paper-image", "hover-image");
 	scissors.classList.add("hover-scissors-image", "hover-image");
 
+	// deletes everything
 	const removeEverything = () => {
 		while (body.firstChild) body.removeChild(body.firstChild);
 	};
 
+	// get the buttonId(rock paper or scissors) to get the correct image
 	function rpsHoverImage(buttonId) {
 		if (buttonId === "rock") {
 			rock.style.display = "block";
@@ -91,6 +93,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			lastImageContainer.appendChild(scissors);
 		}
 	}
+	// displays the rps images onto screen
 	function createRPSHoverImage(buttons) {
 		for (const button of buttons) {
 			button.addEventListener("mouseover", () => {
@@ -111,7 +114,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			});
 		}
 	}
-	function addRPSHoverImagesBox(buttonDiv) {
+	// creates the container for the hoverImages
+	function createRPSHoverImagesBox(buttonDiv) {
 		buttonDiv.classList.add("rps-button-container");
 		for (let hoverImage = 0; hoverImage < 3; hoverImage++) {
 			const imageHoverContainer = document.createElement("div");
@@ -127,7 +131,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			buttonDiv.append(imageHoverContainer);
 		}
 	}
-
+	// creates the rps game screen
 	function createRPSGameScreen() {
 		let playerTurn = 1;
 		const gameHeaderText = document.createElement("h1");
@@ -153,7 +157,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		rpsDisplayContainer.classList.add("rps-image-display-container");
 
 		const buttonDiv = document.createElement("div");
-		addRPSHoverImagesBox(buttonDiv);
+		createRPSHoverImagesBox(buttonDiv);
 		rockButton.textContent = "Rock";
 		paperButton.textContent = "Paper";
 		scissorsButton.textContent = "Scissors";

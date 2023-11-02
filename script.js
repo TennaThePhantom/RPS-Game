@@ -2,7 +2,7 @@ const startGame = document.getElementById("start-game");
 const headerText = document.getElementById("headerText");
 const body = document.body;
 
-const gameMode = {
+const gameMode = { 
 	singlePlayer: 0,
 	twoPlayer: 0,
 };
@@ -13,6 +13,7 @@ startGame.addEventListener("click", () => {
 	chooseGameMode();
 });
 
+// user gameModeChoices
 function chooseGameMode() {
 	const createDiv = document.createElement("div");
 	const singlePlayerButton = document.createElement("button");
@@ -110,8 +111,22 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			});
 		}
 	}
-
-	
+	function addRPSHoverImagesBox(buttonDiv) {
+		buttonDiv.classList.add("rps-button-container");
+		for (let hoverImage = 0; hoverImage < 3; hoverImage++) {
+			const imageHoverContainer = document.createElement("div");
+			imageHoverContainer.classList.add("image-button-container");
+			buttonDiv.append(imageHoverContainer);
+			if (hoverImage === 0) {
+				imageHoverContainer.append(rockButton);
+			} else if (hoverImage === 1) {
+				imageHoverContainer.append(paperButton);
+			} else if (hoverImage === 2) {
+				imageHoverContainer.append(scissorsButton);
+			}
+			buttonDiv.append(imageHoverContainer);
+		}
+	}
 
 	function createRPSGameScreen() {
 		let playerTurn = 1;
@@ -138,20 +153,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		rpsDisplayContainer.classList.add("rps-image-display-container");
 
 		const buttonDiv = document.createElement("div");
-		buttonDiv.classList.add("rps-button-container");
-		for (let hoverImage = 0; hoverImage < 3; hoverImage++) {
-			const imageHoverContainer = document.createElement("div");
-			imageHoverContainer.classList.add("image-button-container");
-			buttonDiv.append(imageHoverContainer);
-			if (hoverImage === 0) {
-				imageHoverContainer.append(rockButton);
-			} else if (hoverImage === 1) {
-				imageHoverContainer.append(paperButton);
-			} else if (hoverImage === 2) {
-				imageHoverContainer.append(scissorsButton);
-			}
-			buttonDiv.append(imageHoverContainer);
-		}
+		addRPSHoverImagesBox(buttonDiv);
 		rockButton.textContent = "Rock";
 		paperButton.textContent = "Paper";
 		scissorsButton.textContent = "Scissors";

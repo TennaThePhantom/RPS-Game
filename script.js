@@ -220,6 +220,35 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			});
 		}
 	}
+	function whoWinsRPS(buttons, playerTurn, gameHeaderText){
+		for(const button of buttons){
+			button.addEventListener("click", () =>{
+				const buttonId = button.id;
+				let playerChoice1 = buttonId;
+				let playerChoice2 = buttonId;
+				let bothPlayersPicked = false;
+				let currentPlayerTurn = playerTurn;
+				if(buttonId === 'rock' && currentPlayerTurn === 1){
+					console.log("this works")
+					playerChoice1 = buttonId;
+					setTimeout(() => {
+						playerTurn = 2;
+					}, 50);
+				}
+				if(buttonId === 'rock' && currentPlayerTurn === 2){
+					console.log("this works2")
+					playerChoice2 = buttonId;
+					bothPlayersPicked = true;
+					
+				}
+
+
+				if((playerChoice1 === 'rock' && playerChoice2 === 'rock') && bothPlayersPicked){
+					gameHeaderText.textContent = "It's a draw";
+				}
+			})
+		}
+	}
 
 	// creates the rps game screen
 	function createRPSGameScreen() {
@@ -266,10 +295,12 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 
 		createRPSHoverImage(buttons);
 		createRPSImages(buttons, playerTurn, gameHeaderText, image1Display, image2Display, rpsDisplayContainer, rockDisplay, paperDisplay, scissorsDisplay);
+		whoWinsRPS(buttons, playerTurn, gameHeaderText);
 	}
 
 	function twoPlayerGameMode() {
 		createRPSGameScreen();
+		
 	}
 
 	if (playerChoice1 === 1 && playerChoice2 === 0) {

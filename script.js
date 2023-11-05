@@ -220,33 +220,40 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			});
 		}
 	}
-	function whoWinsRPS(buttons, playerTurn, gameHeaderText){
-		for(const button of buttons){
-			button.addEventListener("click", () =>{
+	function whoWinsRPS(buttons, gameHeaderText) {
+		let playerChoice1 = null;
+		let playerChoice2 = null;
+		let currentPlayerTurn = 1; // Initialize with player 1's turn
+
+		for (const button of buttons) {
+			button.addEventListener("click", () => {
 				const buttonId = button.id;
-				let playerChoice1 = buttonId;
-				let playerChoice2 = buttonId;
-				let bothPlayersPicked = false;
-				let currentPlayerTurn = playerTurn;
-				if(buttonId === 'rock' && currentPlayerTurn === 1){
-					console.log("this works")
+
+				if (currentPlayerTurn === 1) {
 					playerChoice1 = buttonId;
-					setTimeout(() => {
-						playerTurn = 2;
-					}, 50);
-				}
-				if(buttonId === 'rock' && currentPlayerTurn === 2){
-					console.log("this works2")
+					currentPlayerTurn = 2; // Switch to player 2's turn
+				} else if (currentPlayerTurn === 2) {
 					playerChoice2 = buttonId;
-					bothPlayersPicked = true;
-					
-				}
 
+					// Determine the game result here based on playerChoice1 and playerChoice2
+					if (playerChoice1 === playerChoice2) {
+						gameHeaderText.textContent = "It's a draw";
+					} else if (
+						(playerChoice1 === "rock" && playerChoice2 === "scissors") ||
+						(playerChoice1 === "paper" && playerChoice2 === "rock") ||
+						(playerChoice1 === "scissors" && playerChoice2 === "paper")
+					) {
+						gameHeaderText.textContent = "Player 1 Wins, Player 2 Loses";
+					} else {
+						gameHeaderText.textContent = "Player 2 Wins, Player 1 Loses";
+					}
 
-				if((playerChoice1 === 'rock' && playerChoice2 === 'rock') && bothPlayersPicked){
-					gameHeaderText.textContent = "It's a draw";
+					// Reset the choices for the next round
+					playerChoice1 = null;
+					playerChoice2 = null;
+					currentPlayerTurn = 1; // Switch back to player 1's turn
 				}
-			})
+			});
 		}
 	}
 
@@ -294,13 +301,22 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		body.append(rpsDisplayContainer);
 
 		createRPSHoverImage(buttons);
-		createRPSImages(buttons, playerTurn, gameHeaderText, image1Display, image2Display, rpsDisplayContainer, rockDisplay, paperDisplay, scissorsDisplay);
-		whoWinsRPS(buttons, playerTurn, gameHeaderText);
+		createRPSImages(
+			buttons,
+			playerTurn,
+			gameHeaderText,
+			image1Display,
+			image2Display,
+			rpsDisplayContainer,
+			rockDisplay,
+			paperDisplay,
+			scissorsDisplay
+		);
+		whoWinsRPS(buttons, gameHeaderText);
 	}
 
 	function twoPlayerGameMode() {
 		createRPSGameScreen();
-		
 	}
 
 	if (playerChoice1 === 1 && playerChoice2 === 0) {

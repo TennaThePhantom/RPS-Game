@@ -220,6 +220,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			});
 		}
 	}
+	//rps winner
 	function whoWinsRPS(buttons, gameHeaderText) {
 		let playerChoice1 = null;
 		let playerChoice2 = null;

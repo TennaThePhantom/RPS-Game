@@ -50,6 +50,9 @@ function chooseGameMode() {
 
 // The function will make rps work until user refreshes screen(future)
 function startRockPaperScissorGame(playerChoice1, playerChoice2) {
+	const gameOver = {
+		disableButton: false,
+	};
 	const rock = new Image();
 	const paper = new Image();
 	const scissors = new Image();
@@ -220,10 +223,12 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			});
 		}
 	}
+
 	//rps winner
 	function whoWinsRPS(buttons, gameHeaderText) {
 		let playerChoice1 = null;
 		let playerChoice2 = null;
+		let aPlayerHasWon = false;
 		let currentPlayerTurn = 1; // Initialize with player 1's turn
 
 		for (const button of buttons) {
@@ -245,16 +250,57 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 						(playerChoice1 === "scissors" && playerChoice2 === "paper")
 					) {
 						gameHeaderText.textContent = "Player 1 Wins, Player 2 Loses";
+						aPlayerHasWon = true;
+						replayRPS(aPlayerHasWon);
 					} else {
 						gameHeaderText.textContent = "Player 2 Wins, Player 1 Loses";
+						aPlayerHasWon = true;
 					}
 
-					// Reset the choices for the next round
 					playerChoice1 = null;
 					playerChoice2 = null;
-					currentPlayerTurn = 1; // Switch back to player 1's turn
+					currentPlayerTurn = 1;
 				}
 			});
+		}
+	}
+	// do you want to play again or no
+	function replayRPS(aPlayerHasWon) {
+		if (aPlayerHasWon === true) {
+
+			const playAgainContainer = document.createElement("div");
+			const playAgainYesButton = document.createElement("button");
+			const playAgainNoButton = document.createElement("button");
+			const playAgainHeader = document.createElement("h3");
+			const buttons = [playAgainYesButton, playAgainNoButton]
+
+			playAgainYesButton.textContent = "Yes";
+			playAgainNoButton.textContent = "No";
+			playAgainHeader.textContent = "Do you to play again?";
+
+			playAgainHeader.classList.add("play-again-header");
+			playAgainContainer.classList.add("play-again-container");
+			playAgainYesButton.classList.add(
+				"play-again-button",
+				"play-again-yes-button"
+			);
+			playAgainNoButton.classList.add(
+				"play-again-button",
+				"play-again-no-button"
+			);
+
+			playAgainContainer.append(playAgainHeader);
+			playAgainContainer.append(playAgainYesButton);
+			playAgainContainer.append(playAgainNoButton);
+
+			body.append(playAgainContainer);
+
+			gameOver.disableButton = true;
+			if (gameOver.disableButton === true) {
+				for(button of buttons){
+					button.id = "playAgain"
+				}
+			}
 		}
 	}
 

@@ -264,6 +264,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 
 						// Determine the game result here based on playerChoice1 and playerChoice2
 						if (playerChoice1 === playerChoice2) {
+							aPlayerHasWon = true;
 							gameHeaderText.textContent = "It's a draw";
 							gameOver.disableButton = true;
 							replayRPS(aPlayerHasWon);

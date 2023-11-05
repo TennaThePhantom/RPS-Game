@@ -52,6 +52,7 @@ function chooseGameMode() {
 function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const gameOver = {
 		disableButton: false,
+		replayingGame: false,
 	};
 	const rock = new Image();
 	const paper = new Image();
@@ -166,7 +167,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				let player1Choice = buttonId;
 				if (gameOver.disableButton === true) {
 					disableButtons(buttons, buttonId);
-				} else {
+				} else if (gameOver.disableButton === false) {
 					if (buttonId === "rock" && playerTurn === 1) {
 						player1Choice = buttonId;
 						gameHeaderText.textContent = "Player 2 Choose";
@@ -280,12 +281,12 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							aPlayerHasWon = true;
 							gameOver.disableButton = true;
 							replayRPS(aPlayerHasWon);
-
 						}
-
-						playerChoice1 = null;
-						playerChoice2 = null;
-						currentPlayerTurn = 1;
+						while (gameOver.disableButton === false) {
+							playerChoice1 = null;
+							playerChoice2 = null;
+							currentPlayerTurn = 1;
+						}
 					}
 				}
 			});
@@ -303,6 +304,9 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			playAgainYesButton.textContent = "Yes";
 			playAgainNoButton.textContent = "No";
 			playAgainHeader.textContent = "Do you to play again?";
+
+			playAgainYesButton.id = "play-again";
+			playAgainNoButton.id = "game-over";
 
 			playAgainHeader.classList.add("play-again-header");
 			playAgainContainer.classList.add("play-again-container");
@@ -323,7 +327,14 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 
 			if (gameOver.disableButton === true) {
 				for (button of buttons) {
-					button.id = "playAgain";
+					const buttonId = button.id;
+					button.addEventListener("click", () => {
+						if (buttonId === "play-again") {
+							removeEverything();
+						} else if (buttonId === "game-over") {
+							location.reload();
+						}
+					});
 				}
 			}
 		}
@@ -385,6 +396,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			scissorsDisplay
 		);
 		whoWinsRPS(buttons, gameHeaderText);
+		playerTurn = 1;
 	}
 
 	function twoPlayerGameMode() {

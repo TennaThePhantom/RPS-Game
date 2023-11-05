@@ -71,7 +71,21 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const removeEverything = () => {
 		while (body.firstChild) body.removeChild(body.firstChild);
 	};
-
+	// disables the click
+	function disableButtons(buttons, buttonId) {
+		for (const button of buttons) {
+			button.addEventListener("click", (event) => {
+				if (
+					buttonId === "rock" ||
+					buttonId === "paper" ||
+					buttonId === "scissors"
+				) {
+					event.stopPropagation();
+					event.preventDefault();
+				}
+			});
+		}
+	}
 	// get the buttonId(rock paper or scissors) to get the correct image
 	function rpsHoverImage(buttonId) {
 		if (buttonId === "rock") {
@@ -150,74 +164,78 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
 				let player1Choice = buttonId;
-				if (buttonId === "rock" && playerTurn === 1) {
-					player1Choice = buttonId;
-					gameHeaderText.textContent = "Player 2 Choose";
-					image1Display.append(rockDisplay);
-					rpsDisplayContainer.append(image1Display);
-					rockDisplay.style.display = "block";
-					setTimeout(() => {
-						playerTurn = 2;
-					}, 100);
-				}
-				if (buttonId === "paper" && playerTurn === 1) {
-					gameHeaderText.textContent = "Player 2 Choose";
-					image1Display.append(paperDisplay);
-					rpsDisplayContainer.append(image1Display);
-					paperDisplay.style.display = "block";
-					setTimeout(() => {
-						playerTurn = 2;
-					}, 100);
-				}
-				if (buttonId === "scissors" && playerTurn === 1) {
-					gameHeaderText.textContent = "Player 2 Choose";
-					image1Display.append(scissorsDisplay);
-					rpsDisplayContainer.append(image1Display);
-					scissorsDisplay.style.display = "block";
-					setTimeout(() => {
-						playerTurn = 2;
-					}, 100);
-				}
-				if (buttonId === "rock" && playerTurn === 2) {
-					if (player1Choice === "rock") {
-						const copyRockImage = new Image();
-						copyRockImage.src = "Rock.jpg";
-						copyRockImage.classList.add("rps-display-image");
-						image2Display.append(copyRockImage);
-						rpsDisplayContainer.append(image2Display);
-						copyRockImage.style.display = "block";
-					} else {
-						image2Display.append(rockDisplay);
-						rpsDisplayContainer.append(image2Display);
+				if (gameOver.disableButton === true) {
+					disableButtons(buttons, buttonId);
+				} else {
+					if (buttonId === "rock" && playerTurn === 1) {
+						player1Choice = buttonId;
+						gameHeaderText.textContent = "Player 2 Choose";
+						image1Display.append(rockDisplay);
+						rpsDisplayContainer.append(image1Display);
 						rockDisplay.style.display = "block";
+						setTimeout(() => {
+							playerTurn = 2;
+						}, 100);
 					}
-				}
-				if (buttonId === "paper" && playerTurn === 2) {
-					if (player1Choice === "paper") {
-						const copyPaperImage = new Image();
-						copyPaperImage.src = "Paper.jpg";
-						copyPaperImage.classList.add("rps-display-image");
-						image2Display.append(copyPaperImage);
-						rpsDisplayContainer.append(image2Display);
-						copyPaperImage.style.display = "block";
-					} else {
-						image2Display.append(paperDisplay);
-						rpsDisplayContainer.append(image2Display);
+					if (buttonId === "paper" && playerTurn === 1) {
+						gameHeaderText.textContent = "Player 2 Choose";
+						image1Display.append(paperDisplay);
+						rpsDisplayContainer.append(image1Display);
 						paperDisplay.style.display = "block";
+						setTimeout(() => {
+							playerTurn = 2;
+						}, 100);
 					}
-				}
-				if (buttonId === "scissors" && playerTurn === 2) {
-					if (player1Choice === "scissors") {
-						const copyScissorsImage = new Image();
-						copyScissorsImage.src = "Scissors.jpg";
-						copyScissorsImage.classList.add("rps-display-image");
-						image2Display.append(copyScissorsImage);
-						rpsDisplayContainer.append(image2Display);
-						copyScissorsImage.style.display = "block";
-					} else {
-						image2Display.append(scissors);
-						rpsDisplayContainer.append(image2Display);
+					if (buttonId === "scissors" && playerTurn === 1) {
+						gameHeaderText.textContent = "Player 2 Choose";
+						image1Display.append(scissorsDisplay);
+						rpsDisplayContainer.append(image1Display);
 						scissorsDisplay.style.display = "block";
+						setTimeout(() => {
+							playerTurn = 2;
+						}, 100);
+					}
+					if (buttonId === "rock" && playerTurn === 2) {
+						if (player1Choice === "rock") {
+							const copyRockImage = new Image();
+							copyRockImage.src = "Rock.jpg";
+							copyRockImage.classList.add("rps-display-image");
+							image2Display.append(copyRockImage);
+							rpsDisplayContainer.append(image2Display);
+							copyRockImage.style.display = "block";
+						} else {
+							image2Display.append(rockDisplay);
+							rpsDisplayContainer.append(image2Display);
+							rockDisplay.style.display = "block";
+						}
+					}
+					if (buttonId === "paper" && playerTurn === 2) {
+						if (player1Choice === "paper") {
+							const copyPaperImage = new Image();
+							copyPaperImage.src = "Paper.jpg";
+							copyPaperImage.classList.add("rps-display-image");
+							image2Display.append(copyPaperImage);
+							rpsDisplayContainer.append(image2Display);
+							copyPaperImage.style.display = "block";
+						} else {
+							image2Display.append(paperDisplay);
+							rpsDisplayContainer.append(image2Display);
+							paperDisplay.style.display = "block";
+						}
+					}
+					if (buttonId === "scissors" && playerTurn === 2) {
+						if (player1Choice === "scissors") {
+							const copyScissorsImage = new Image();
+							copyScissorsImage.src = "Scissors.jpg";
+							copyScissorsImage.classList.add("rps-display-image");
+							image2Display.append(copyScissorsImage);
+							rpsDisplayContainer.append(image2Display);
+							copyScissorsImage.style.display = "block";
+						} else {
+							image2Display.append(scissors);
+							rpsDisplayContainer.append(image2Display);
+							scissorsDisplay.style.display = "block";
+						}
 					}
 				}
 			});
@@ -234,32 +252,41 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		for (const button of buttons) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
+				if (gameOver.disableButton === true) {
+					disableButtons(buttons, buttonId);
+				} else {
+					if (currentPlayerTurn === 1) {
+						playerChoice1 = buttonId;
+						currentPlayerTurn = 2; // Switch to player 2's turn
+					} else if (currentPlayerTurn === 2) {
+						playerChoice2 = buttonId;
 
-				if (currentPlayerTurn === 1) {
-					playerChoice1 = buttonId;
-					currentPlayerTurn = 2; // Switch to player 2's turn
-				} else if (currentPlayerTurn === 2) {
-					playerChoice2 = buttonId;
+						// Determine the game result here based on playerChoice1 and playerChoice2
+						if (playerChoice1 === playerChoice2) {
+							gameHeaderText.textContent = "It's a draw";
+							gameOver.disableButton = true;
+							replayRPS(aPlayerHasWon);
+						} else if (
+							(playerChoice1 === "rock" && playerChoice2 === "scissors") ||
+							(playerChoice1 === "paper" && playerChoice2 === "rock") ||
+							(playerChoice1 === "scissors" && playerChoice2 === "paper")
+						) {
+							gameHeaderText.textContent = "Player 1 Wins, Player 2 Loses";
+							aPlayerHasWon = true;
+							gameOver.disableButton = true;
+							replayRPS(aPlayerHasWon);
+						} else {
+							gameHeaderText.textContent = "Player 2 Wins, Player 1 Loses";
+							aPlayerHasWon = true;
+							gameOver.disableButton = true;
+							replayRPS(aPlayerHasWon);
 
-					// Determine the game result here based on playerChoice1 and playerChoice2
-					if (playerChoice1 === playerChoice2) {
-						gameHeaderText.textContent = "It's a draw";
-					} else if (
-						(playerChoice1 === "rock" && playerChoice2 === "scissors") ||
-						(playerChoice1 === "paper" && playerChoice2 === "rock") ||
-						(playerChoice1 === "scissors" && playerChoice2 === "paper")
-					) {
-						gameHeaderText.textContent = "Player 1 Wins, Player 2 Loses";
-						aPlayerHasWon = true;
-						replayRPS(aPlayerHasWon);
-					} else {
-						gameHeaderText.textContent = "Player 2 Wins, Player 1 Loses";
-						aPlayerHasWon = true;
+						}
+
+						playerChoice1 = null;
+						playerChoice2 = null;
+						currentPlayerTurn = 1;
 					}
-
-					playerChoice1 = null;
-					playerChoice2 = null;
-					currentPlayerTurn = 1;
 				}
 			});
 		}
@@ -267,12 +294,11 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	// do you want to play again or no
 	function replayRPS(aPlayerHasWon) {
 		if (aPlayerHasWon === true) {
-
 			const playAgainContainer = document.createElement("div");
 			const playAgainYesButton = document.createElement("button");
 			const playAgainNoButton = document.createElement("button");
 			const playAgainHeader = document.createElement("h3");
-			const buttons = [playAgainYesButton, playAgainNoButton]
+			const buttons = [playAgainYesButton, playAgainNoButton];
 
 			playAgainYesButton.textContent = "Yes";
 			playAgainNoButton.textContent = "No";
@@ -295,10 +321,9 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 
 			body.append(playAgainContainer);
 
-			gameOver.disableButton = true;
 			if (gameOver.disableButton === true) {
-				for(button of buttons){
-					button.id = "playAgain"
+				for (button of buttons) {
+					button.id = "playAgain";
 				}
 			}
 		}

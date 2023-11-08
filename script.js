@@ -51,7 +51,7 @@ function chooseGameMode() {
 // The function will make rps work until user refreshes screen(future)
 function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const gameOver = {
-		disableButton: false,
+		gameIsDone: false,
 	};
 	const rock = new Image();
 	const paper = new Image();
@@ -76,11 +76,11 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		images.forEach((image) => image.remove());
 	}
 
-	const clearDisplay = (imageReset, containerReset ) => {
-		imageReset.innerHTML = '';
-		containerReset.innerHTML = '';
-
-	  }
+	function clearDisplay(image1Reset, image2Reset, containerReset) {
+		image1Reset.innerHTML = "";
+		image2Reset.innerHTML = "";
+		containerReset.innerHTML = "";
+	}
 
 	// get the buttonId(rock paper or scissors) to get the correct image
 	function rpsHoverImage(buttonId) {
@@ -144,6 +144,54 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			buttonDiv.append(imageHoverContainer);
 		}
 	}
+
+	function rpsImagesDisplayChoice(
+		buttonId,
+		player1Choice,
+		playerTurn,
+		image2Display,
+		rpsDisplayContainer,
+		rockDisplay,
+		paperDisplay,
+		scissorsDisplay
+	) {
+		if (playerTurn !== 2) {
+			return null;
+		}
+		if (buttonId === player1Choice) {
+			const copyImage = new Image();
+			switch (player1Choice) {
+				case "rock":
+					copyImage.src = "Rock.jpg";
+					break;
+				case "paper":
+					copyImage.src = "Paper.jpg";
+					break;
+				case "scissors":
+					copyImage.src = "Scissors.jpg";
+					break;
+				default:
+					console.log("Error image can't be found");
+			}
+			copyImage.classList.add("rps-display-image");
+			image2Display.append(copyImage);
+			rpsDisplayContainer.append(image2Display);
+			copyImage.style.display = "block";
+		} else {
+			let displayImage = null;
+			if (buttonId === "rock") {
+				displayImage = rockDisplay;
+			} else if (displayImage === "paper") {
+				displayImage = paperDisplay;
+			} else if (displayImage === "scissors") {
+				displayImage = scissorsDisplay;
+			}
+			displayImage.classList.add("rps-display-image");
+			image2Display.append(displayImage);
+			rpsDisplayContainer.append(image2Display);
+			displayImage.style.display = "block";
+		}
+	}
 	// makes the rps images to show in middle of screen
 	function createRPSImages(
 		buttons,
@@ -157,92 +205,79 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		scissorsDisplay
 	) {
 		for (const button of buttons) {
+			let player1Choice = null;
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
-				let player1Choice = buttonId;
-				if (gameOver.disableButton === true) {
+				player1Choice = buttonId;
+				if (gameOver.gameIsDone === true) {
+					player1Choice = null;
 					playerTurn = 1;
+					clearDisplay(image1Display, image2Display, rpsDisplayContainer);
 					return null;
-				} else if (gameOver.disableButton === false) {
-					if (buttonId === "rock" && playerTurn === 1) {
-						player1Choice = buttonId;
-						gameHeaderText.textContent = "Player 2 Choose";
-						clearDisplay(image1Display, rpsDisplayContainer); 
-						image1Display.append(rockDisplay);
-						rpsDisplayContainer.append(image1Display);
-						rockDisplay.style.display = "block";
-						setTimeout(() => {
-							playerTurn = 2;
-						}, 100);
-					}
-					if (buttonId === "paper" && playerTurn === 1) {
-						player1Choice = buttonId;
-						gameHeaderText.textContent = "Player 2 Choose";
-						clearDisplay(image1Display, rpsDisplayContainer); 
-						image1Display.append(paperDisplay);
-						rpsDisplayContainer.append(image1Display);
-						paperDisplay.style.display = "block";
-						setTimeout(() => {
-							playerTurn = 2;
-						}, 100);
-					}
-					if (buttonId === "scissors" && playerTurn === 1) {
-						player1Choice = buttonId;
-						gameHeaderText.textContent = "Player 2 Choose";
-						clearDisplay(image1Display, rpsDisplayContainer); 
-						image1Display.append(scissorsDisplay);
-						rpsDisplayContainer.append(image1Display);
-						scissorsDisplay.style.display = "block";
-						setTimeout(() => {
-							playerTurn = 2;
-						}, 100);
-					}
-					if (buttonId === "rock" && playerTurn === 2) {
-						console.log("???????????")
-						if (player1Choice === "rock") {
-							const copyRockImage = new Image();
-							copyRockImage.src = "Rock.jpg";
-							copyRockImage.classList.add("rps-display-image");
-							image2Display.append(copyRockImage);
-							rpsDisplayContainer.append(image2Display);
-							copyRockImage.style.display = "block";
-						} else {
-							image2Display.append(rockDisplay);
-							rpsDisplayContainer.append(image2Display);
+				} else if (gameOver.gameIsDone === false) {
+					if (buttonId === "rock") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Player 2 Choose";
+							image1Display.append(rockDisplay);
+							rpsDisplayContainer.append(image1Display);
 							rockDisplay.style.display = "block";
+							playerTurn = 2;
+						} else if (playerTurn === 2) {
+							rpsImagesDisplayChoice(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
 						}
 					}
-					if (buttonId === "paper" && playerTurn === 2) {
-						console.log("???????????")
-						if (player1Choice === "paper") {
-							const copyPaperImage = new Image();
-							copyPaperImage.src = "Paper.jpg";
-							copyPaperImage.classList.add("rps-display-image");
-							image2Display.append(copyPaperImage);
-							rpsDisplayContainer.append(image2Display);
-							copyPaperImage.style.display = "block";
-						} else {
-							image2Display.append(paperDisplay);
-							rpsDisplayContainer.append(image2Display);
+					if (buttonId === "paper") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Player 2 Choose";
+							image1Display.append(paperDisplay);
+							rpsDisplayContainer.append(image1Display);
 							paperDisplay.style.display = "block";
+							playerTurn = 2;
+						} else if (playerTurn === 2) {
+							rpsImagesDisplayChoice(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
 						}
 					}
-					if (buttonId === "scissors" && playerTurn === 2) {
-						console.log("???????????")
-						if (player1Choice === "scissors") {
-							const copyScissorsImage = new Image();
-							copyScissorsImage.src = "Scissors.jpg";
-							copyScissorsImage.classList.add("rps-display-image");
-							image2Display.append(copyScissorsImage);
-							rpsDisplayContainer.append(image2Display);
-							copyScissorsImage.style.display = "block";
-						} else {
-							image2Display.append(scissors);
-							rpsDisplayContainer.append(image2Display);
+					if (buttonId === "scissors") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Player 2 Choose";
+							image1Display.append(scissorsDisplay);
+							rpsDisplayContainer.append(image1Display);
 							scissorsDisplay.style.display = "block";
+							playerTurn = 2;
+						} else if (playerTurn === 2) {
+							rpsImagesDisplayChoice(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
 						}
 					}
-					
 				}
 			});
 		}
@@ -257,9 +292,9 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		for (const button of buttons) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
-				if (gameOver.disableButton === true) {
+				if (gameOver.gameIsDone === true) {
 					return null;
-				} else if (gameOver.disableButton === false) {
+				} else if (gameOver.gameIsDone === false) {
 					if (currentPlayerTurn === 1) {
 						playerChoice1 = buttonId;
 						currentPlayerTurn = 2; // Switch to player 2's turn
@@ -269,7 +304,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 						// Determine the game result here based on playerChoice1 and playerChoice2
 						if (playerChoice1 === playerChoice2) {
 							gameHeaderText.textContent = "It's a draw";
-							gameOver.disableButton = true;
+							gameOver.gameIsDone = true;
 							replayRPS();
 						} else if (
 							(playerChoice1 === "rock" && playerChoice2 === "scissors") ||
@@ -277,12 +312,12 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							(playerChoice1 === "scissors" && playerChoice2 === "paper")
 						) {
 							gameHeaderText.textContent = "Player 1 Wins, Player 2 Loses";
-							gameOver.disableButton = true;
+							gameOver.gameIsDone = true;
 							replayRPS();
 						} else {
-							console.log("else statement winning")
+							console.log("else statement winning");
 							gameHeaderText.textContent = "Player 2 Wins, Player 1 Loses";
-							gameOver.disableButton = true;
+							gameOver.gameIsDone = true;
 							replayRPS();
 						}
 					}
@@ -394,11 +429,11 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	}
 
 	function reCreateRPSGameScreen() {
+		gameOver.gameIsDone = false;
 		removeAllImagesFromBody();
 		removeEverything();
 
 		createRPSGameScreen();
-		gameOver.disableButton = false;
 	}
 
 	function twoPlayerGameMode() {

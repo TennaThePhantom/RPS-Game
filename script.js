@@ -76,10 +76,14 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		images.forEach((image) => image.remove());
 	}
 
-	function clearDisplay(image1Reset, image2Reset, containerReset) {
-		image1Reset.innerHTML = "";
-		image2Reset.innerHTML = "";
-		containerReset.innerHTML = "";
+	function clearDisplay(image1Display, image2Display, rpsDisplayContainer, rockDisplay, paperDisplay, scissorsDisplay) {
+		image1Display.innerHTML = "";
+		image2Display.innerHTML = "";
+		rpsDisplayContainer.innerHTML = "";
+		rockDisplay.style.display = '';
+		paperDisplay.style.display = '';
+		scissorsDisplay.style.display = ''
+		
 	}
 
 	// get the buttonId(rock paper or scissors) to get the correct image
@@ -212,7 +216,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (gameOver.gameIsDone === true) {
 					player1Choice = null;
 					playerTurn = 1;
-					clearDisplay(image1Display, image2Display, rpsDisplayContainer);
+					clearDisplay(image1Display, image2Display, rpsDisplayContainer, rockDisplay, paperDisplay, scissorsDisplay);
 					return null;
 				} else if (gameOver.gameIsDone === false) {
 					if (buttonId === "rock") {

@@ -52,7 +52,7 @@ function chooseGameMode() {
 function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const gameOver = {
 		gameIsDone: false,
-		replayingRPS: false
+		replayingRPS: false,
 	};
 	const rock = new Image();
 	const paper = new Image();
@@ -216,22 +216,15 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
 				player1Choice = buttonId;
-				if (gameOver.gameIsDone === true) {
-					console.log("Game is done yyyy");
-					playerTurn = 1;
-					player1Choice = null;
-					player1Choice = buttonId;
-				} if (gameOver.gameIsDone === false) {
+				if (gameOver.gameIsDone === false) {
 					if (buttonId === "rock") {
 						if (playerTurn === 1) {
-							console.log("player 1 turn");
 							player1Choice = buttonId;
 							gameHeaderText.textContent = "Player 2 Choose";
 							image1Display.append(rockDisplay);
 							rpsDisplayContainer.append(image1Display);
 							rockDisplay.style.display = "block";
 							playerTurn = 2;
-							console.log("Going to player 2");
 						} else if (playerTurn === 2) {
 							rpsImagesDisplayChoice(
 								buttonId,
@@ -286,9 +279,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								scissorsDisplay
 							);
 							playerTurn = 1;
-
 						}
-
 					}
 				}
 			});
@@ -340,6 +331,9 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							playerChoice1 = null;
 							playerChoice2 = null;
 							currentPlayerTurn = 1;
+							document.addEventListener("click", function (event) {
+								event.preventDefault();
+							});
 							replayRPS(
 								image1Display,
 								image2Display,
@@ -349,7 +343,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								paperDisplay,
 								scissorsDisplay
 							);
-							gameIsDone = (gameOver.gameIsDone = false);
+							gameIsDone = gameOver.gameIsDone = false;
 						}
 					}
 				}
@@ -403,7 +397,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 					playAgainContainer.remove();
 					gameOver.replayingRPS = true;
 					if (gameOver.replayingRPS === true) {
-						console.log("Reset is working fine");
 						gameHeaderText.textContent = "Player 1 Choose";
 						clearDisplay(
 							image1Display,
@@ -414,7 +407,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							scissorsDisplay
 						);
 						gameMode.gameIsDone = false;
-						if(gameOver.gameIsDone === false){
+						if (gameOver.gameIsDone === false) {
 							gameOver.replayingRPS = false;
 						}
 					}

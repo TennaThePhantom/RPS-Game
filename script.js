@@ -60,6 +60,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const rockButton = document.createElement("button");
 	const paperButton = document.createElement("button");
 	const scissorsButton = document.createElement("button");
+	const images = document.getElementsByTagName("img");
 
 	rock.src = "Rock.jpg";
 	paper.src = "Paper.jpg";
@@ -212,7 +213,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	) {
 		for (const button of buttons) {
 			let player1Choice = null;
-
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
 				player1Choice = buttonId;
@@ -238,6 +238,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							);
 							playerTurn = 1;
 						}
+	
 					} else if (buttonId === "paper") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
@@ -257,6 +258,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								paperDisplay,
 								scissorsDisplay
 							);
+							playerTurn = 1;
 						}
 					} else if (buttonId === "scissors") {
 						if (playerTurn === 1) {

@@ -50,7 +50,7 @@ function chooseGameMode() {
 
 // The function will make rps work until user refreshes screen(future)
 function startRockPaperScissorGame(playerChoice1, playerChoice2) {
-	const gameOver = {
+	const rpsGame = {
 		gameIsDone: false,
 		replayingRPS: false,
 	};
@@ -216,7 +216,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
 				player1Choice = buttonId;
-				if (gameOver.gameIsDone === false) {
+				if (rpsGame.gameIsDone === false) {
 					if (buttonId === "rock") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
@@ -257,7 +257,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								paperDisplay,
 								scissorsDisplay
 							);
-							playerTurn = 1;
 						}
 					} else if (buttonId === "scissors") {
 						if (playerTurn === 1) {
@@ -300,7 +299,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		let playerChoice1 = null;
 		let playerChoice2 = null;
 		let currentPlayerTurn = 1; // Initialize with player 1's turn
-		let gameIsDone = (gameOver.gameIsDone = false);
+		let gameIsDone = (rpsGame.gameIsDone = false);
 
 		for (const button of buttons) {
 			button.addEventListener("click", () => {
@@ -315,17 +314,17 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 						// Determine the game result here based on playerChoice1 and playerChoice2
 						if (playerChoice1 === playerChoice2) {
 							gameHeaderText.textContent = "It's a draw";
-							gameIsDone = gameOver.gameIsDone = true;
+							gameIsDone = rpsGame.gameIsDone = true;
 						} else if (
 							(playerChoice1 === "rock" && playerChoice2 === "scissors") ||
 							(playerChoice1 === "paper" && playerChoice2 === "rock") ||
 							(playerChoice1 === "scissors" && playerChoice2 === "paper")
 						) {
 							gameHeaderText.textContent = "Player 1 Wins, Player 2 Loses";
-							gameIsDone = gameOver.gameIsDone = true;
+							gameIsDone = rpsGame.gameIsDone = true;
 						} else {
 							gameHeaderText.textContent = "Player 2 Wins, Player 1 Loses";
-							gameIsDone = gameOver.gameIsDone = true;
+							gameIsDone = rpsGame.gameIsDone = true;
 						}
 						if (gameIsDone === true) {
 							playerChoice1 = null;
@@ -343,7 +342,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								paperDisplay,
 								scissorsDisplay
 							);
-							gameIsDone = gameOver.gameIsDone = false;
+							gameIsDone = rpsGame.gameIsDone = false;
 						}
 					}
 				}
@@ -395,8 +394,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			button.addEventListener("click", () => {
 				if (buttonId === "play-again") {
 					playAgainContainer.remove();
-					gameOver.replayingRPS = true;
-					if (gameOver.replayingRPS === true) {
+					rpsGame.replayingRPS = true;
+					if (rpsGame.replayingRPS === true) {
 						gameHeaderText.textContent = "Player 1 Choose";
 						clearDisplay(
 							image1Display,
@@ -407,8 +406,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							scissorsDisplay
 						);
 						gameMode.gameIsDone = false;
-						if (gameOver.gameIsDone === false) {
-							gameOver.replayingRPS = false;
+						if (rpsGame.gameIsDone === false) {
+							rpsGame.replayingRPS = false;
 						}
 					}
 				} else if (buttonId === "game-over") {

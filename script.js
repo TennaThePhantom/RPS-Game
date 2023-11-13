@@ -88,8 +88,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		paperDisplay.innerHTML = "";
 		scissorsDisplay.innerHTML = "";
 	}
-
-	function clearButtons(activeButtons) {
+	// readds the buttons or clears buttons depend on if game is over or replaying
+	function buttonsHideOrVisible(activeButtons) {
 		if (activeButtons === false) {
 			rockButton.style.visibility = "hidden";
 			paperButton.style.visibility = "hidden";
@@ -362,7 +362,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								activeButtons
 							);
 							gameIsDone = rpsGame.gameIsDone = false;
-							clearButtons(activeButtons)
+							buttonsHideOrVisible(activeButtons)
 							activeButtons = false;
 
 						}
@@ -429,7 +429,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							scissorsDisplay
 						);
 						activeButtons = true
-						clearButtons(activeButtons)
+						buttonsHideOrVisible(activeButtons)
 						gameMode.gameIsDone = false;
 						if (rpsGame.gameIsDone === false) {
 							rpsGame.replayingRPS = false;

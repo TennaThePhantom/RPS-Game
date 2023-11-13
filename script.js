@@ -60,7 +60,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const rockButton = document.createElement("button");
 	const paperButton = document.createElement("button");
 	const scissorsButton = document.createElement("button");
-	const images = document.getElementsByTagName("img");
 
 	rock.src = "Rock.jpg";
 	paper.src = "Paper.jpg";
@@ -73,6 +72,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	const removeEverything = () => {
 		while (body.firstChild) body.removeChild(body.firstChild);
 	};
+	// resets everything back to normal
 	function clearDisplay(
 		image1Display,
 		image2Display,
@@ -87,6 +87,22 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		rockDisplay.innerHTML = "";
 		paperDisplay.innerHTML = "";
 		scissorsDisplay.innerHTML = "";
+	}
+
+	function clearButtons(activeButtons) {
+		if (activeButtons === false) {
+			rockButton.style.visibility = "hidden";
+			paperButton.style.visibility = "hidden";
+			scissorsButton.style.visibility = "hidden";
+		}
+		else if(activeButtons === true){
+			rockButton.style.visibility = 'visible'
+			paperButton.style.visibility = 'visible'
+			scissorsButton.style.visibility = 'visible';
+		}
+		else{
+			console.log("Some is wrong with buttons styling ");
+		}
 	}
 
 	// get the buttonId(rock paper or scissors) to get the correct image
@@ -238,7 +254,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							);
 							playerTurn = 1;
 						}
-	
 					} else if (buttonId === "paper") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
@@ -300,6 +315,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	) {
 		let playerChoice1 = null;
 		let playerChoice2 = null;
+		let activeButtons = false;
 		let currentPlayerTurn = 1; // Initialize with player 1's turn
 		let gameIsDone = (rpsGame.gameIsDone = false);
 
@@ -342,9 +358,13 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								gameHeaderText,
 								rockDisplay,
 								paperDisplay,
-								scissorsDisplay
+								scissorsDisplay,
+								activeButtons
 							);
 							gameIsDone = rpsGame.gameIsDone = false;
+							clearButtons(activeButtons)
+							activeButtons = false;
+
 						}
 					}
 				}
@@ -359,7 +379,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		gameHeaderText,
 		rockDisplay,
 		paperDisplay,
-		scissorsDisplay
+		scissorsDisplay,
+		activeButtons
 	) {
 		const playAgainContainer = document.createElement("div");
 		const playAgainYesButton = document.createElement("button");
@@ -407,6 +428,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							paperDisplay,
 							scissorsDisplay
 						);
+						activeButtons = true
+						clearButtons(activeButtons)
 						gameMode.gameIsDone = false;
 						if (rpsGame.gameIsDone === false) {
 							rpsGame.replayingRPS = false;
@@ -439,6 +462,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		const rpsDisplayContainer = document.createElement("div");
 		const image1Display = document.createElement("div");
 		const image2Display = document.createElement("div");
+		const images = rpsDisplayContainer.getElementsByTagName("img");
 		image1Display.classList.add("display-image-1");
 		image2Display.classList.add("display-image-2");
 

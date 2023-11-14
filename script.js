@@ -94,13 +94,11 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			rockButton.style.visibility = "hidden";
 			paperButton.style.visibility = "hidden";
 			scissorsButton.style.visibility = "hidden";
-		}
-		else if(activeButtons === true){
-			rockButton.style.visibility = 'visible'
-			paperButton.style.visibility = 'visible'
-			scissorsButton.style.visibility = 'visible';
-		}
-		else{
+		} else if (activeButtons === true) {
+			rockButton.style.visibility = "visible";
+			paperButton.style.visibility = "visible";
+			scissorsButton.style.visibility = "visible";
+		} else {
 			console.log("Some is wrong with buttons styling ");
 		}
 	}
@@ -167,7 +165,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			buttonDiv.append(imageHoverContainer);
 		}
 	}
-
 	// for player two to see if image needs to be a copy or original
 	function rpsImagesDisplayChoice(
 		buttonId,
@@ -253,7 +250,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								paperDisplay,
 								scissorsDisplay
 							);
-							playerTurn = 1; // resets the if statement 
+							playerTurn = 1; // resets the if statement
 						}
 					} else if (buttonId === "paper") {
 						if (playerTurn === 1) {
@@ -317,7 +314,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		let playerChoice1 = null;
 		let playerChoice2 = null;
 		let activeButtons = false;
-		let currentPlayerTurn = 1; 
+		let currentPlayerTurn = 1;
 		let gameIsDone = (rpsGame.gameIsDone = false);
 
 		for (const button of buttons) {
@@ -326,11 +323,11 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (gameIsDone === false) {
 					if (currentPlayerTurn === 1) {
 						playerChoice1 = buttonId;
-						currentPlayerTurn = 2; 
+						currentPlayerTurn = 2;
 					} else if (currentPlayerTurn === 2) {
 						playerChoice2 = buttonId;
 
-						// Determine the game result here based on playerChoice1 and playerChoice2
+						// Determine the game result here based on player 1 and player 2 choice
 						if (playerChoice1 === playerChoice2) {
 							gameHeaderText.textContent = "It's a draw";
 							gameIsDone = rpsGame.gameIsDone = true;
@@ -349,9 +346,6 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							playerChoice1 = null;
 							playerChoice2 = null;
 							currentPlayerTurn = 1;
-							document.addEventListener("click", function (event) {
-								event.preventDefault();
-							});
 							replayRPS(
 								image1Display,
 								image2Display,
@@ -363,9 +357,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								activeButtons
 							);
 							gameIsDone = rpsGame.gameIsDone = false;
-							buttonsHideOrVisible(activeButtons)
-							activeButtons = false;
-
+							buttonsHideOrVisible(activeButtons);
 						}
 					}
 				}
@@ -419,7 +411,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (buttonId === "play-again") {
 					playAgainContainer.remove();
 					rpsGame.replayingRPS = true;
-					if (rpsGame.replayingRPS === true) { // resets everything back to normal
+					if (rpsGame.replayingRPS === true) {
+						// resets everything back to normal
 						gameHeaderText.textContent = "Player 1 Choose";
 						clearDisplay(
 							image1Display,
@@ -429,8 +422,8 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 							paperDisplay,
 							scissorsDisplay
 						);
-						activeButtons = true
-						buttonsHideOrVisible(activeButtons)
+						activeButtons = true;
+						buttonsHideOrVisible(activeButtons);
 						gameMode.gameIsDone = false;
 						if (rpsGame.gameIsDone === false) {
 							rpsGame.replayingRPS = false;
@@ -509,13 +502,10 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			paperDisplay,
 			scissorsDisplay
 		);
-		playerTurn = 1;
 	}
-
 	function twoPlayerGameMode() {
 		createRPSGameScreen();
 	}
-
 	if (playerChoice1 === 1 && playerChoice2 === 0) {
 		removeEverything();
 	} else if (playerChoice2 === 1 && playerChoice1 === 0) {

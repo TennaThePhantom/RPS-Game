@@ -168,6 +168,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		}
 	}
 
+	// for player two to see if image needs to be a copy or original
 	function rpsImagesDisplayChoice(
 		buttonId,
 		player1Choice,
@@ -252,7 +253,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								paperDisplay,
 								scissorsDisplay
 							);
-							playerTurn = 1;
+							playerTurn = 1; // resets the if statement 
 						}
 					} else if (buttonId === "paper") {
 						if (playerTurn === 1) {
@@ -316,7 +317,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		let playerChoice1 = null;
 		let playerChoice2 = null;
 		let activeButtons = false;
-		let currentPlayerTurn = 1; // Initialize with player 1's turn
+		let currentPlayerTurn = 1; 
 		let gameIsDone = (rpsGame.gameIsDone = false);
 
 		for (const button of buttons) {
@@ -325,7 +326,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (gameIsDone === false) {
 					if (currentPlayerTurn === 1) {
 						playerChoice1 = buttonId;
-						currentPlayerTurn = 2; // Switch to player 2's turn
+						currentPlayerTurn = 2; 
 					} else if (currentPlayerTurn === 2) {
 						playerChoice2 = buttonId;
 
@@ -418,7 +419,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 				if (buttonId === "play-again") {
 					playAgainContainer.remove();
 					rpsGame.replayingRPS = true;
-					if (rpsGame.replayingRPS === true) {
+					if (rpsGame.replayingRPS === true) { // resets everything back to normal
 						gameHeaderText.textContent = "Player 1 Choose";
 						clearDisplay(
 							image1Display,

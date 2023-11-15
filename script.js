@@ -209,9 +209,9 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			let displayImage = null;
 			if (buttonId === "rock") {
 				displayImage = rockDisplay;
-			} else if (displayImage === "paper") {
+			} else if (buttonId === "paper") {
 				displayImage = paperDisplay;
-			} else if (displayImage === "scissors") {
+			} else if (buttonId === "scissors") {
 				displayImage = scissorsDisplay;
 			}
 			displayImage.classList.add("rps-display-image");

@@ -220,7 +220,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			displayImage.style.display = "block";
 		}
 	}
-	// creates a rps image for the ai turn
+	// creates a rps image for the ai turn for player two to show in middle
 	function aiRPSImages(
 		buttonId,
 		player1Choice,
@@ -235,7 +235,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			return null;
 		}
 		let randomNumber = generateRandomNumber();
-		console.log("random number is "  + randomNumber)
+		console.log("random number is " + randomNumber);
 		switch (randomNumber) {
 			case 1:
 				buttonId = "rock";
@@ -249,7 +249,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			default:
 				console.log("There was a error when generating a random number");
 		}
-		console.log("Player 2 choice is " + buttonId )
+		console.log("Player 2 choice is " + buttonId);
 		if (player1Choice === buttonId) {
 			const copyImage = new Image();
 			switch (buttonId) {
@@ -284,7 +284,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			displayImage.style.display = "block";
 		}
 	}
-	// makes the rps images to show in middle of screen
+	// makes the rps images for player to show in middle of screen
 	function twoPlayerCreateRPSImages(
 		buttons,
 		playerTurn,
@@ -370,7 +370,35 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			});
 		}
 	}
-
+	
+	// adds delays for computer to pick image
+	function startAiPickingImage(
+		buttonId,
+		player1Choice,
+		playerTurn,
+		image2Display,
+		rpsDisplayContainer,
+		rockDisplay,
+		paperDisplay,
+		scissorsDisplay
+	) {
+		let aiPickImageTurn;
+		aiPickImageTurn = setInterval(() => {
+			if (playerTurn === 2) {
+				aiRPSImages(
+					buttonId,
+					player1Choice,
+					playerTurn,
+					image2Display,
+					rpsDisplayContainer,
+					rockDisplay,
+					paperDisplay,
+					scissorsDisplay
+				);
+				clearInterval(aiPickImageTurn);
+			}
+		}, 3000);
+	}
 	function singlePlayerCreateRPSImages(
 		buttons,
 		playerTurn,
@@ -391,12 +419,32 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 					if (buttonId === "rock") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
-							gameHeaderText.textContent = "Player 2 Choose";
+							gameHeaderText.textContent = " Ai is Picking";
 							image1Display.append(rockDisplay);
 							rpsDisplayContainer.append(image1Display);
 							rockDisplay.style.display = "block";
 							playerTurn = 2;
-							aiRPSImages(
+							startAiPickingImage(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
+							playerTurn = 1;
+						}
+					} else if (buttonId === "paper") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Ai is Picking";
+							image1Display.append(paperDisplay);
+							rpsDisplayContainer.append(image1Display);
+							paperDisplay.style.display = "block";
+							playerTurn = 2;
+							startAiPickingImage(
 								buttonId,
 								player1Choice,
 								playerTurn,
@@ -407,23 +455,24 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 								scissorsDisplay
 							);
 						}
-					} else if (buttonId === "paper") {
-						if (playerTurn === 1) {
-							player1Choice = buttonId;
-							gameHeaderText.textContent = "Player 2 Choose";
-							image1Display.append(paperDisplay);
-							rpsDisplayContainer.append(image1Display);
-							paperDisplay.style.display = "block";
-							playerTurn = 2;
-						}
 					} else if (buttonId === "scissors") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
-							gameHeaderText.textContent = "Player 2 Choose";
+							gameHeaderText.textContent = "Ai is Picking";
 							image1Display.append(scissorsDisplay);
 							rpsDisplayContainer.append(image1Display);
 							scissorsDisplay.style.display = "block";
 							playerTurn = 2;
+							startAiPickingImage(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
 						}
 					}
 				}

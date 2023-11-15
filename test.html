@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			img {
+				display: none;
+                height: 100px;
+                width: 100px;
+			}
+		</style>
+		<title>Rock Paper Scissors</title>
+	</head>
+	<body>
+		<button id="playButton">Play</button>
+		<img id="player1Image" src="" alt="Player 1 Image" />
+		<img id="player2Image" src="" alt="Player 2 Image" />
+
+		<script>
+			document
+				.getElementById("playButton")
+				.addEventListener("click", startGame);
+
+			function startGame() {
+				// Player 1
+				playRound("player1Image", 1); // 1000ms (1 second) delay
+
+				// Player 2
+				setTimeout(() => {
+					playRound("player2Image", 1000); // 1000ms (1 second) delay
+				}, 3000); // Delay between player 1 and player 2 (2000ms or 2 seconds)
+			}
+
+			function playRound(imageId, delay) {
+				const randomNumber = Math.floor(Math.random() * 3) + 1;
+				const resultImage = document.getElementById(imageId);
+				resultImage.src = getImageSource(randomNumber);
+
+				// Show the image after the specified delay
+				setTimeout(() => {
+					resultImage.style.display = "inline";
+				}, delay);
+			}
+
+			function getImageSource(randomNumber) {
+				switch (randomNumber) {
+					case 1:
+						return "Rock.jpg"; // Replace with the actual path to your rock image
+					case 2:
+						return "Paper.jpg"; // Replace with the actual path to your paper image
+					case 3:
+						return "Scissors.jpg"; // Replace with the actual path to your scissors image
+					default:
+						return "";
+				}
+			}
+		</script>
+	</body>
+</html>

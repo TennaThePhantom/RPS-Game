@@ -19,8 +19,8 @@ function chooseGameMode() {
 	const singlePlayerButton = document.createElement("button");
 	const twoPlayerButton = document.createElement("button");
 	const buttons = [singlePlayerButton, twoPlayerButton];
-	let playerChoice1;
-	let playerChoice2;
+	let singlePlayerChoice;
+	let twoPlayerChoice;
 
 	createDiv.classList.add("button-container");
 
@@ -36,20 +36,20 @@ function chooseGameMode() {
 	for (const button of buttons) {
 		button.addEventListener("click", (click) => {
 			if (click.target === singlePlayerButton) {
-				playerChoice1 = gameMode.singlePlayer = 1;
-				playerChoice2 = gameMode.twoPlayer = 0;
-				startRockPaperScissorGame(playerChoice1, playerChoice2);
+				singlePlayerChoice = gameMode.singlePlayer = 1;
+				twoPlayerChoice = gameMode.twoPlayer = 0;
+				startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice);
 			} else if (click.target === twoPlayerButton) {
-				playerChoice2 = gameMode.twoPlayer = 1;
-				playerChoice1 = gameMode.singlePlayer = 0;
-				startRockPaperScissorGame(playerChoice1, playerChoice2);
+				twoPlayerChoice = gameMode.twoPlayer = 1;
+				singlePlayerChoice = gameMode.singlePlayer = 0;
+				startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice);
 			}
 		});
 	}
 }
 
 // The function will make rps work until user refreshes screen(future)
-function startRockPaperScissorGame(playerChoice1, playerChoice2) {
+function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 	const rpsGame = {
 		gameIsDone: false,
 		replayingRPS: false,
@@ -74,7 +74,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	};
 	function generateRandomNumber() {
 		const minNumber = 1;
-		const maxNumber = 2;
+		const maxNumber = 3;
 		let randomNumber =
 			Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
 		return randomNumber;
@@ -175,7 +175,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	// for player two to see if image needs to be a copy or original
 	function rpsImagesDisplayChoice(
 		buttonId,
-		player1ButtonChoice,
+		player1Choice,
 		playerTurn,
 		image2Display,
 		rpsDisplayContainer,
@@ -186,9 +186,9 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		if (playerTurn !== 2) {
 			return null;
 		}
-		if (buttonId === player1ButtonChoice) {
+		if (buttonId === player1Choice) {
 			const copyImage = new Image();
-			switch (player1ButtonChoice) {
+			switch (player1Choice) {
 				case "rock":
 					copyImage.src = "Rock.jpg";
 					break;
@@ -223,7 +223,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	// creates a rps image for the ai turn
 	function aiRPSImages(
 		buttonId,
-		player1ButtonChoice,
+		player1Choice,
 		playerTurn,
 		image2Display,
 		rpsDisplayContainer,
@@ -235,6 +235,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			return null;
 		}
 		let randomNumber = generateRandomNumber();
+		console.log("random number is "  + randomNumber)
 		switch (randomNumber) {
 			case 1:
 				buttonId = "rock";
@@ -248,9 +249,10 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			default:
 				console.log("There was a error when generating a random number");
 		}
-		if (player1ButtonChoice === buttonId) {
+		console.log("Player 2 choice is " + buttonId )
+		if (player1Choice === buttonId) {
 			const copyImage = new Image();
-			switch (player1ButtonChoice) {
+			switch (buttonId) {
 				case "rock":
 					copyImage.src = "Rock.jpg";
 					break;
@@ -271,9 +273,9 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 			let displayImage = null;
 			if (buttonId === "rock") {
 				displayImage = rockDisplay;
-			} else if (displayImage === "paper") {
+			} else if (buttonId === "paper") {
 				displayImage = paperDisplay;
-			} else if (displayImage === "scissors") {
+			} else if (buttonId === "scissors") {
 				displayImage = scissorsDisplay;
 			}
 			displayImage.classList.add("rps-display-image");
@@ -283,7 +285,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		}
 	}
 	// makes the rps images to show in middle of screen
-	function createRPSImages(
+	function twoPlayerCreateRPSImages(
 		buttons,
 		playerTurn,
 		gameHeaderText,
@@ -295,53 +297,35 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		scissorsDisplay
 	) {
 		for (const button of buttons) {
-			let player1ButtonChoice = null;
+			let player1Choice = null;
 			button.addEventListener("click", () => {
 				const buttonId = button.id;
-				player1ButtonChoice = buttonId;
-				let aiPick = false;
+				player1Choice = buttonId;
 				if (rpsGame.gameIsDone === false) {
 					if (buttonId === "rock") {
 						if (playerTurn === 1) {
-							player1ButtonChoice = buttonId;
+							player1Choice = buttonId;
 							gameHeaderText.textContent = "Player 2 Choose";
 							image1Display.append(rockDisplay);
 							rpsDisplayContainer.append(image1Display);
 							rockDisplay.style.display = "block";
 							playerTurn = 2;
 						} else if (playerTurn === 2) {
-							if (playerChoice1 === 1) {
-								console.log("This works")
-								document.addEventListener(
-									"DOMContentLoaded",
-									aiRPSImages(
-										buttonId,
-										player1ButtonChoice,
-										playerTurn,
-										image2Display,
-										rpsDisplayContainer,
-										rockDisplay,
-										paperDisplay,
-										scissorsDisplay
-									)
-								);
-							} else {
-								rpsImagesDisplayChoice(
-									buttonId,
-									player1ButtonChoice,
-									playerTurn,
-									image2Display,
-									rpsDisplayContainer,
-									rockDisplay,
-									paperDisplay,
-									scissorsDisplay
-								);
-							}
+							rpsImagesDisplayChoice(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
 							playerTurn = 1; // resets the if statement
 						}
 					} else if (buttonId === "paper") {
 						if (playerTurn === 1) {
-							player1ButtonChoice = buttonId;
+							player1Choice = buttonId;
 							gameHeaderText.textContent = "Player 2 Choose";
 							image1Display.append(paperDisplay);
 							rpsDisplayContainer.append(image1Display);
@@ -350,7 +334,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 						} else if (playerTurn === 2) {
 							rpsImagesDisplayChoice(
 								buttonId,
-								player1ButtonChoice,
+								player1Choice,
 								playerTurn,
 								image2Display,
 								rpsDisplayContainer,
@@ -362,7 +346,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 						}
 					} else if (buttonId === "scissors") {
 						if (playerTurn === 1) {
-							player1ButtonChoice = buttonId;
+							player1Choice = buttonId;
 							gameHeaderText.textContent = "Player 2 Choose";
 							image1Display.append(scissorsDisplay);
 							rpsDisplayContainer.append(image1Display);
@@ -371,7 +355,7 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 						} else if (playerTurn === 2) {
 							rpsImagesDisplayChoice(
 								buttonId,
-								player1ButtonChoice,
+								player1Choice,
 								playerTurn,
 								image2Display,
 								rpsDisplayContainer,
@@ -380,6 +364,66 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 								scissorsDisplay
 							);
 							playerTurn = 1;
+						}
+					}
+				}
+			});
+		}
+	}
+
+	function singlePlayerCreateRPSImages(
+		buttons,
+		playerTurn,
+		gameHeaderText,
+		image1Display,
+		image2Display,
+		rpsDisplayContainer,
+		rockDisplay,
+		paperDisplay,
+		scissorsDisplay
+	) {
+		for (const button of buttons) {
+			let player1Choice = null;
+			button.addEventListener("click", () => {
+				const buttonId = button.id;
+				player1Choice = buttonId;
+				if (rpsGame.gameIsDone === false) {
+					if (buttonId === "rock") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Player 2 Choose";
+							image1Display.append(rockDisplay);
+							rpsDisplayContainer.append(image1Display);
+							rockDisplay.style.display = "block";
+							playerTurn = 2;
+							aiRPSImages(
+								buttonId,
+								player1Choice,
+								playerTurn,
+								image2Display,
+								rpsDisplayContainer,
+								rockDisplay,
+								paperDisplay,
+								scissorsDisplay
+							);
+						}
+					} else if (buttonId === "paper") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Player 2 Choose";
+							image1Display.append(paperDisplay);
+							rpsDisplayContainer.append(image1Display);
+							paperDisplay.style.display = "block";
+							playerTurn = 2;
+						}
+					} else if (buttonId === "scissors") {
+						if (playerTurn === 1) {
+							player1Choice = buttonId;
+							gameHeaderText.textContent = "Player 2 Choose";
+							image1Display.append(scissorsDisplay);
+							rpsDisplayContainer.append(image1Display);
+							scissorsDisplay.style.display = "block";
+							playerTurn = 2;
 						}
 					}
 				}
@@ -568,17 +612,31 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 		body.append(rpsDisplayContainer);
 
 		createRPSHoverImage(buttons);
-		createRPSImages(
-			buttons,
-			playerTurn,
-			gameHeaderText,
-			image1Display,
-			image2Display,
-			rpsDisplayContainer,
-			rockDisplay,
-			paperDisplay,
-			scissorsDisplay
-		);
+		if (singlePlayerChoice === 1 && twoPlayerChoice === 0) {
+			singlePlayerCreateRPSImages(
+				buttons,
+				playerTurn,
+				gameHeaderText,
+				image1Display,
+				image2Display,
+				rpsDisplayContainer,
+				rockDisplay,
+				paperDisplay,
+				scissorsDisplay
+			);
+		} else if (twoPlayerChoice === 1 && singlePlayerChoice === 0) {
+			twoPlayerCreateRPSImages(
+				buttons,
+				playerTurn,
+				gameHeaderText,
+				image1Display,
+				image2Display,
+				rpsDisplayContainer,
+				rockDisplay,
+				paperDisplay,
+				scissorsDisplay
+			);
+		}
 		whoWinsRPS(
 			buttons,
 			gameHeaderText,
@@ -597,10 +655,10 @@ function startRockPaperScissorGame(playerChoice1, playerChoice2) {
 	function singlePlayerGameMode() {
 		createRPSGameScreen();
 	}
-	if (playerChoice1 === 1 && playerChoice2 === 0) {
+	if (singlePlayerChoice === 1 && twoPlayerChoice === 0) {
 		removeEverything();
 		singlePlayerGameMode();
-	} else if (playerChoice2 === 1 && playerChoice1 === 0) {
+	} else if (twoPlayerChoice === 1 && singlePlayerChoice === 0) {
 		removeEverything();
 		twoPlayerGameMode();
 	} else {

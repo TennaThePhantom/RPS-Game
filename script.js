@@ -370,7 +370,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			});
 		}
 	}
-	
+
 	// adds delays for computer to pick image
 	function startAiPickingImage(
 		buttonId,
@@ -481,7 +481,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 	}
 
 	//rps winner
-	function whoWinsRPS(
+	function whoWinsRPSTwoPlayer(
 		buttons,
 		gameHeaderText,
 		image1Display,
@@ -585,7 +585,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 
 		body.append(playAgainContainer);
 
-		for (button of buttons) {
+		for (const button of buttons) {
 			const buttonId = button.id;
 			button.addEventListener("click", () => {
 				if (buttonId === "play-again") {
@@ -686,7 +686,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 				scissorsDisplay
 			);
 		}
-		whoWinsRPS(
+		whoWinsRPSTwoPlayer(
 			buttons,
 			gameHeaderText,
 			image1Display,

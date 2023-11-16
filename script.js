@@ -223,8 +223,10 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 	// creates a rps image for the ai turn for player two to show in middle
 	function aiRPSImages(
 		buttonId,
+		gameHeaderText,
 		player1Choice,
 		playerTurn,
+		image1Display,
 		image2Display,
 		rpsDisplayContainer,
 		rockDisplay,
@@ -249,10 +251,11 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			default:
 				console.log("There was a error when generating a random number");
 		}
-		console.log("Player 2 choice is " + buttonId);
-		if (player1Choice === buttonId) {
+		let player2Choice = buttonId;
+		console.log("Player 2 choice is " + player2Choice);
+		if (player1Choice === player2Choice) {
 			const copyImage = new Image();
-			switch (buttonId) {
+			switch (player2Choice) {
 				case "rock":
 					copyImage.src = "Rock.jpg";
 					break;
@@ -269,19 +272,41 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			image2Display.append(copyImage);
 			rpsDisplayContainer.append(image2Display);
 			copyImage.style.display = "block";
+			whoWinsRPSSinglePlayer(
+				player1Choice,
+				player2Choice,
+				gameHeaderText,
+				image1Display,
+				image2Display,
+				rpsDisplayContainer,
+				rockDisplay,
+				paperDisplay,
+				scissorsDisplay
+			);
 		} else {
 			let displayImage = null;
-			if (buttonId === "rock") {
+			if (player2Choice === "rock") {
 				displayImage = rockDisplay;
-			} else if (buttonId === "paper") {
+			} else if (player2Choice === "paper") {
 				displayImage = paperDisplay;
-			} else if (buttonId === "scissors") {
+			} else if (player2Choice === "scissors") {
 				displayImage = scissorsDisplay;
 			}
 			displayImage.classList.add("rps-display-image");
 			image2Display.append(displayImage);
 			rpsDisplayContainer.append(image2Display);
 			displayImage.style.display = "block";
+			whoWinsRPSSinglePlayer(
+				player1Choice,
+				player2Choice,
+				gameHeaderText,
+				image1Display,
+				image2Display,
+				rpsDisplayContainer,
+				rockDisplay,
+				paperDisplay,
+				scissorsDisplay
+			);
 		}
 	}
 	// makes the rps images for player to show in middle of screen
@@ -374,8 +399,10 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 	// adds delays for computer to pick image
 	function startAiPickingImage(
 		buttonId,
+		gameHeaderText,
 		player1Choice,
 		playerTurn,
+		image1Display,
 		image2Display,
 		rpsDisplayContainer,
 		rockDisplay,
@@ -387,8 +414,10 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 			if (playerTurn === 2) {
 				aiRPSImages(
 					buttonId,
+					gameHeaderText,
 					player1Choice,
 					playerTurn,
+					image1Display,
 					image2Display,
 					rpsDisplayContainer,
 					rockDisplay,
@@ -426,8 +455,10 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 							playerTurn = 2;
 							startAiPickingImage(
 								buttonId,
+								gameHeaderText,
 								player1Choice,
 								playerTurn,
+								image1Display,
 								image2Display,
 								rpsDisplayContainer,
 								rockDisplay,
@@ -437,7 +468,9 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 							playerTurn = 1;
 						}
 					} else if (buttonId === "paper") {
+						console.log("This works paper");
 						if (playerTurn === 1) {
+							console.log("Paper is player 1 choice ");
 							player1Choice = buttonId;
 							gameHeaderText.textContent = "Ai is Picking";
 							image1Display.append(paperDisplay);
@@ -446,16 +479,20 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 							playerTurn = 2;
 							startAiPickingImage(
 								buttonId,
+								gameHeaderText,
 								player1Choice,
 								playerTurn,
+								image1Display,
 								image2Display,
 								rpsDisplayContainer,
 								rockDisplay,
 								paperDisplay,
 								scissorsDisplay
 							);
+							playerTurn = 1;
 						}
-					} else if (buttonId === "scissors") {
+					}
+					else if (buttonId === "scissors") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
 							gameHeaderText.textContent = "Ai is Picking";
@@ -465,18 +502,68 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 							playerTurn = 2;
 							startAiPickingImage(
 								buttonId,
+								gameHeaderText,
 								player1Choice,
 								playerTurn,
+								image1Display,
 								image2Display,
 								rpsDisplayContainer,
 								rockDisplay,
 								paperDisplay,
 								scissorsDisplay
 							);
+							playerTurn = 1;
 						}
 					}
 				}
 			});
+		}
+	}
+
+	function whoWinsRPSSinglePlayer(
+		player1Choice,
+		Player2Choice,
+		gameHeaderText,
+		image1Display,
+		image2Display,
+		rpsDisplayContainer,
+		rockDisplay,
+		paperDisplay,
+		scissorsDisplay
+	) {
+		let gameIsDone = (rpsGame.gameIsDone = false);
+		let activeButtons = false;
+		if (player1Choice === Player2Choice) {
+			gameHeaderText.textContent = "It's a draw";
+			gameIsDone = rpsGame.gameIsDone = true;
+		} else if (
+			(player1Choice === "rock" && Player2Choice === "scissors") ||
+			(player1Choice === "paper" && Player2Choice === "rock") ||
+			(player1Choice === "scissors" && Player2Choice === "paper")
+		) {
+			gameHeaderText.textContent = "Player 1 Wins, Ai Loses";
+			gameIsDone = rpsGame.gameIsDone = true;
+		} else {
+			gameHeaderText.textContent = "Ai Wins, Player 1 Loses";
+			gameIsDone = rpsGame.gameIsDone = true;
+		}
+		if (gameIsDone === true) {
+			player1Choice = null;
+			Player2Choice = null;
+			if (gameIsDone === true) {
+				replayRPS(
+					image1Display,
+					image2Display,
+					rpsDisplayContainer,
+					gameHeaderText,
+					rockDisplay,
+					paperDisplay,
+					scissorsDisplay,
+					activeButtons
+				);
+				gameIsDone = rpsGame.gameIsDone = false;
+				buttonsHideOrVisible(activeButtons);
+			}
 		}
 	}
 
@@ -685,17 +772,17 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 				paperDisplay,
 				scissorsDisplay
 			);
+			whoWinsRPSTwoPlayer(
+				buttons,
+				gameHeaderText,
+				image1Display,
+				image2Display,
+				rpsDisplayContainer,
+				rockDisplay,
+				paperDisplay,
+				scissorsDisplay
+			);
 		}
-		whoWinsRPSTwoPlayer(
-			buttons,
-			gameHeaderText,
-			image1Display,
-			image2Display,
-			rpsDisplayContainer,
-			rockDisplay,
-			paperDisplay,
-			scissorsDisplay
-		);
 	}
 	function twoPlayerGameMode() {
 		createRPSGameScreen();

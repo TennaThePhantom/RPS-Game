@@ -48,7 +48,6 @@ function chooseGameMode() {
 	}
 }
 
-// The function will make rps work until user refreshes screen(future)
 function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 	const rpsGame = {
 		gameIsDone: false,
@@ -68,10 +67,15 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 	paper.classList.add("hover-paper-image", "hover-image");
 	scissors.classList.add("hover-scissors-image", "hover-image");
 
-	// deletes everything
-	const removeEverything = () => {
-		while (body.firstChild) body.removeChild(body.firstChild);
-	};
+	// deletes everything from the screen
+	function removeEverything() {
+		const body = document.body;
+		while (body.firstChild) {
+			body.removeChild(body.firstChild);
+		}
+	}
+
+	// ai gets a random number between 1 and 3
 	function generateRandomNumber() {
 		const minNumber = 1;
 		const maxNumber = 3;
@@ -491,8 +495,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 							);
 							playerTurn = 1;
 						}
-					}
-					else if (buttonId === "scissors") {
+					} else if (buttonId === "scissors") {
 						if (playerTurn === 1) {
 							player1Choice = buttonId;
 							gameHeaderText.textContent = "Ai is Picking";

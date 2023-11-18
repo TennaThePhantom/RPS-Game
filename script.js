@@ -650,7 +650,7 @@ function startRockPaperScissorGame(singlePlayerChoice, twoPlayerChoice) {
 
 		playAgainYesButton.textContent = "Yes";
 		playAgainNoButton.textContent = "No";
-		playAgainHeader.textContent = "Do you to play again?";
+		playAgainHeader.textContent = "Do you want to play again?";
 
 		playAgainYesButton.id = "play-again";
 		playAgainNoButton.id = "game-over";

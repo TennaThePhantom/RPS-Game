@@ -6,7 +6,7 @@
 }
 :root {
 	--white: #fff;
-	--green: rgb(15, 224, 91);
+	--green: #0fe05b;
 	--bright-green: #1eff00;
 	--red: #c41114;
 	--bright-red: #fb2327;
@@ -136,7 +136,7 @@ h1.rps-header {
 	left: 74%;
 	top: -95px;
 }
-.rps-image-display-container{
+.rps-image-display-container {
 	height: 300px;
 	width: 600px;
 	position: absolute;
@@ -146,27 +146,27 @@ h1.rps-header {
 	align-items: center;
 }
 
-.display-image-1{
+.display-image-1 {
 	margin-left: 35px;
 }
 
-.display-image-2{
+.display-image-2 {
 	margin-right: 35px;
 }
 
-.rps-display-image{
+.rps-display-image {
 	display: none;
 	height: 195px;
 	width: 195px;
 	border-radius: 10%;
 }
 
-.play-again-container{
+.play-again-container {
 	position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	bottom: 30%;
+	bottom: 26%;
 	z-index: 100;
 	height: 120px;
 	width: 320px;
@@ -174,16 +174,16 @@ h1.rps-header {
 	background-color: black;
 }
 
-.play-again-header{
+.play-again-header {
 	color: var(--white);
 	position: absolute;
 	top: 10px;
 	letter-spacing: 1.5px;
 }
 
-.play-again-button{
+.play-again-button {
 	padding: 5px;
-	margin: 15% auto 0 auto ;
+	margin: 15% auto 0 auto;
 	font-weight: 500;
 	font-size: 1.4rem;
 	letter-spacing: 1.5px;
@@ -192,16 +192,16 @@ h1.rps-header {
 	cursor: pointer;
 }
 
-.play-again-yes-button{
+.play-again-yes-button {
 	background-color: var(--green);
 }
-.play-again-yes-button:hover{
+.play-again-yes-button:hover {
 	background-color: var(--bright-green);
 }
 
-.play-again-no-button{
+.play-again-no-button {
 	background-color: var(--red);
 }
-.play-again-no-button:hover{
+.play-again-no-button:hover {
 	background-color: var(--bright-red);
 }
